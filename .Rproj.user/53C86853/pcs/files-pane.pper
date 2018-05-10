@@ -1,0 +1,9 @@
+{
+    "path" : "~/Code/ISB-CGC-Shiny/Shiny_Heatmaply/data",
+    "sortOrder" : [
+        {
+            "ascending" : true,
+            "columnIndex" : 2
+        }
+    ]
+}

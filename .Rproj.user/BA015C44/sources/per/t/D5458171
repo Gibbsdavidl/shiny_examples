@@ -1,0 +1,23 @@
+{
+    "collab_server" : "",
+    "contents" : "",
+    "created" : 1508197859826.000,
+    "dirty" : false,
+    "encoding" : "UTF-8",
+    "folds" : "",
+    "hash" : "607467437",
+    "id" : "D5458171",
+    "lastKnownWriteTime" : 1508346466,
+    "last_content_update" : 1508346466856,
+    "path" : "~/Dropbox/isb_shinemaply/ui.R",
+    "project_path" : "ui.R",
+    "properties" : {
+        "cursorPosition" : "23,59",
+        "scrollLine" : "15",
+        "tempName" : "Untitled1"
+    },
+    "relative_order" : 2,
+    "source_on_save" : false,
+    "source_window" : "",
+    "type" : "r_source"
+}

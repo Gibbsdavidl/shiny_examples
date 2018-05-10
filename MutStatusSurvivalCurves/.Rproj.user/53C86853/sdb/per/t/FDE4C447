@@ -1,0 +1,20 @@
+{
+    "collab_server" : "",
+    "contents" : "\n# global.R\n\n\nbuildAndRunQuery <- function(varName, aproject, cohort) {\n  q <- paste(\n    \"\n    WITH \n    clin_table AS (\n    select\n    case_barcode,\n    days_to_last_known_alive,\n    vital_status \n    from\n    `isb-cgc.TCGA_bioclin_v0.Clinical`\n    WHERE\n    project_short_name = '\", cohort,\"' ),\n    mut_table AS (\n    SELECT\n    case_barcode,\n    IF ( case_barcode IN (\n    SELECT\n    case_barcode\n    FROM\n    `isb-cgc.TCGA_hg38_data_v0.Somatic_Mutation`\n    WHERE\n    SYMBOL = '\", varName, \"'\n    AND Variant_Classification <> 'Silent'\n    AND Variant_Type = 'SNP'\n    AND IMPACT <> 'LOW'), 'Mutant', 'WT') as mutation_status\n    FROM\n    `isb-cgc.TCGA_hg38_data_v0.Somatic_Mutation` )\n    SELECT\n    mut_table.case_barcode,\n    days_to_last_known_alive,\n    vital_status,\n    mutation_status\n    FROM\n    clin_table\n    JOIN\n    mut_table\n    ON\n    clin_table.case_barcode = mut_table.case_barcode\n    GROUP BY\n    mut_table.case_barcode,\n    days_to_last_known_alive,\n    vital_status,\n    mutation_status\n    \",\n    sep=\"\")\n  \n  print(q)\n  \n  #define body for the POST request Google BigQuery API     \n  body = list(\n    query=q,\n    defaultDataset.projectId=aproject,\n    useLegacySql = F\n  )\n  \n  #create a function to interact with Google BigQuery\n  f = gar_api_generator(\"https://www.googleapis.com/bigquery/v2\",\n                        \"POST\",\n                        path_args = list(projects=aproject, queries=\"\"))\n  \n  #call function with body as input argument\n  response = f(the_body=body)\n  \n  dat <- data.frame()\n  if(!is.null(response))\n  {\n    dat = as.data.frame(do.call(\"rbind\",lapply(response$content$rows$f,FUN = t)))\n    colnames(dat) <- c(\"ID\", \"days_to_last_known_alive\", \"vital_status\", \"mutation_status\")\n    dat$days_to_last_known_alive <- as.numeric(as.character(dat$days_to_last_known_alive))\n    #dat$days_to_death[dat$vital_status == 'Alive'] <- max(dat$days_to_death, na.rm=T)\n    dat$vital_status <- ifelse(dat$vital_status == 'Alive', yes=0, no=1)\n    dat$mutation_status <- as.factor(dat$mutation_status)\n  }\n  print(head(dat))\n  return(dat)\n}\n\n\ndrawPlot <- function(project, cohort, varname) {\n  dat <- buildAndRunQuery(varname, project, cohort)\n  fit <- survfit(Surv(days_to_last_known_alive, vital_status) ~ mutation_status, data=dat)\n  ylower <- max(0, min(fit$lower))\n  survminer::ggsurvplot(fit=fit, data=dat, pval=T, risk.table=T, conf.int=T)\n}\n\nerrorPlot <- function() {\n  plot(x=1,y=1,col=0,xlab=\"\",ylab=\"\", axes=FALSE); \n  text(1,1,\"please log in using your google ID\", cex = 2)\n}\n",
+    "created" : 1502827591197.000,
+    "dirty" : false,
+    "encoding" : "UTF-8",
+    "folds" : "",
+    "hash" : "2700575351",
+    "id" : "FDE4C447",
+    "lastKnownWriteTime" : 1502830391,
+    "last_content_update" : 1502830391373,
+    "path" : "~/Code/ISB-CGC-Shiny/MutStatusSurvivalCurves/global.R",
+    "project_path" : "global.R",
+    "properties" : {
+    },
+    "relative_order" : 1,
+    "source_on_save" : false,
+    "source_window" : "",
+    "type" : "r_source"
+}

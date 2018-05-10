@@ -1,0 +1,22 @@
+{
+    "collab_server" : "",
+    "contents" : "",
+    "created" : 1508956980360.000,
+    "dirty" : false,
+    "encoding" : "UTF-8",
+    "folds" : "",
+    "hash" : "3473661911",
+    "id" : "6B39D9E4",
+    "lastKnownWriteTime" : 1509481908,
+    "last_content_update" : 1509481908894,
+    "path" : "~/Code/ISB-CGC-Shiny/Shiny_Heatmaply/ui.R",
+    "project_path" : "ui.R",
+    "properties" : {
+        "cursorPosition" : "38,11",
+        "scrollLine" : "0"
+    },
+    "relative_order" : 3,
+    "source_on_save" : false,
+    "source_window" : "",
+    "type" : "r_source"
+}

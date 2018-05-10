@@ -1,0 +1,20 @@
+{
+    "collab_server" : "",
+    "contents" : "\n# This is the server logic for a Shiny web application.\n# You can find out more about building applications with Shiny here:\n#\n# http://shiny.rstudio.com\n#\n\nlibrary(shiny)\nlibrary(bigrquery)\nlibrary(survival)\nlibrary(survminer)\nlibrary(googleAuthR)\nlibrary(bigQueryR)\n\noptions(\"googleAuthR.scopes.selected\" = c(\"https://www.googleapis.com/auth/bigquery\"))\noptions(\"googleAuthR.webapp.client_id\" = \"688392488169-56smn3ubk4mineahjm4gc3jtho1d7rfo.apps.googleusercontent.com\")\noptions(\"googleAuthR.webapp.client_secret\" = \"HJjjuOFI3aDoepCR0npxgdMf\")\n\nserver <- function(input, output, session){\n  ## Create access token and render login button\n  access_token <- callModule(googleAuth, \"loginButton\", approval_prompt = \"force\")\n  \n  outputPlot <- eventReactive(input$submit,{\n    ## wrap existing function with_shiny\n    ## pass the reactive token in shiny_access_token\n    ## pass other named arguments\n    project  <- as.character(input$projectid)\n    cohort   <- as.character(input$cohortid)\n    varname  <- input$varname\n    \n    if(is.null(access_token())) {\n      errorPlot()\n    } else {\n      with_shiny(f = drawPlot, shiny_access_token = access_token(), project, cohort, varname)\n    }\n    \n  })\n  \n  output$plot <- renderPlot({outputPlot()}, width=600, height=500) \n}\n\n# shiny::runApp(launch.browser = T, port = 6984)\n",
+    "created" : 1502828191615.000,
+    "dirty" : false,
+    "encoding" : "UTF-8",
+    "folds" : "",
+    "hash" : "1412829784",
+    "id" : "9EC74C78",
+    "lastKnownWriteTime" : 1502827515,
+    "last_content_update" : 1502827515,
+    "path" : "~/Code/ISB-CGC-Shiny/MutStatusSurvivalCurves/server.R",
+    "project_path" : "server.R",
+    "properties" : {
+    },
+    "relative_order" : 2,
+    "source_on_save" : false,
+    "source_window" : "",
+    "type" : "r_source"
+}

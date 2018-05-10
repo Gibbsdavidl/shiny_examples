@@ -1,0 +1,22 @@
+{
+    "collab_server" : "",
+    "contents" : "",
+    "created" : 1509120903166.000,
+    "dirty" : false,
+    "encoding" : "UTF-8",
+    "folds" : "",
+    "hash" : "562691431",
+    "id" : "588EF3AE",
+    "lastKnownWriteTime" : 1508964505,
+    "last_content_update" : 1508964505,
+    "path" : "~/Code/ISB-CGC-Shiny/Shiny_Heatmaply/data/data_proc.R",
+    "project_path" : "data/data_proc.R",
+    "properties" : {
+        "cursorPosition" : "11,0",
+        "scrollLine" : "0"
+    },
+    "relative_order" : 5,
+    "source_on_save" : false,
+    "source_window" : "",
+    "type" : "r_source"
+}
